@@ -11,7 +11,7 @@ class Builder(pygame.sprite.Sprite):
          return
 
     def load_image(self, name, color=None):
-        fullname = os.path.abspath("misc/image" + name)
+        fullname = os.path.abspath("misc/image/" + name)
         try:
             image = pygame.image.load(fullname)
         except pygame.error, message:
@@ -29,7 +29,7 @@ class Builder(pygame.sprite.Sprite):
             def play(self): pass
         if not pygame.mixer or not pygame.mixer.get_init():
             return NoneSound()
-        fullname = os.path.abspath("misc/sound" + name)
+        fullname = os.path.abspath("misc/sound/" + name)
         try:
             sound = pygame.mixer.Sound(fullname)
         except pygame.error, message:
