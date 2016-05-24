@@ -5,7 +5,9 @@ from pygame.locals import *
 class Builder(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = self.load_image('python.png')
+        self.image = pygame.Surface([10, 10])
+        self.image.fill((0, 0, 0, 0))
+        self.rect = self.image.get_rect()
 
     def update(self):
          return
