@@ -11,9 +11,8 @@ if not pygame.mixer: print 'Warning, sound disabled'
 class Game:
     def __init__(self):
         pygame.init()
-        screen = pygame.display.set_mode((900, 600))
+        screen = pygame.display.set_mode((400, 400))
         pygame.display.set_caption('Jeu de Dame')
-        # all the miscs Map()
         background = pygame.Surface(screen.get_size())
         background = background.convert()
         background.fill((250, 250, 250))
@@ -22,8 +21,7 @@ class Game:
         pygame.display.flip()
 
         clock = pygame.time.Clock()
-        builder = Builder()
-        sprites = pygame.sprite.RenderPlain((builder))
+        sprites = self.mapFactory()
 
         while 1:
             clock.tick(60)
@@ -38,4 +36,46 @@ class Game:
             sprites.draw(screen)
             pygame.display.flip()
 
+    def mapFactory(self):
+        isDame = False
+        isPawn = False
+        ci = False
+        i = 0
+        offset = 0
+        height = 360
+        sp = []
+        building = 1
+
+        while building:
+            if i % 2 and i <= 10:
+                isPawn = True
+            if i % 10 == 0 and i != 0:
+                if ci == False:
+                    ci = True
+                else:
+                    ci = False
+                offset = 0
+                height = height - 40
+
+            if i < 100:
+                if ci == True:
+                    color = self.defineColor(i + 1)
+                else:
+                     color = self.defineColor(i)
+                sp.append(Builder(offset, height, color, isPawn, isDame))
+                #push in dictionary to get repere
+                offset = offset + 40
+                i = i + 1
+            else:
+                building = 0
+
+        sprites = pygame.sprite.RenderPlain(sp)
+        return sprites
+
+    def defineColor(self, number):
+        if (number % 2 == 0):
+            color = (99, 57, 0, 0.9)
+        else:
+            color = (215, 157, 78, 0.9)
+        return color
 Game();
