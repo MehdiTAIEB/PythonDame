@@ -17,7 +17,7 @@ class Builder(pygame.sprite.Sprite):
         self.isDame = isDame
 
     def update(self):
-        if self.isPawn == True: # and if color is not already
+        if self.isPawn == True: # and if color is not already maybe correct grapic bug to over redraw
            self.image.fill((0,0,0,0))
            self.rect = self.image.get_rect()
         return
