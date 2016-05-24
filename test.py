@@ -49,6 +49,8 @@ class Game:
         while building:
             if i % 2 and i <= 10:
                 isPawn = True
+            else:
+                isPawn = False
             if i % 10 == 0 and i != 0:
                 if ci == False:
                     ci = True
