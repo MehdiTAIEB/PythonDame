@@ -6,18 +6,20 @@ class Builder(pygame.sprite.Sprite):
     def __init__(self, x, y, color, isPawn=False, isDame=False):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.Surface([40, 40])
-        self.image.fill(color)
-        self.rect = self.image.get_rect()
         self.x = x
         self.y = y
-        self.rect.x = x
-        self.rect.y = y
-        self.color = color
         self.isPawn = isPawn
         self.isDame = isDame
+        if self.isPawn == True:
+            self.updateColor((255, 255, 255))
+        else:
+            self.updateColor(color)
+        self.image.fill(self.color)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
     def update(self):
-        if self.isPawn == True: # and if color is not already maybe correct grapic bug to over redraw
-           self.image.fill((0,0,0,0))
-           self.rect = self.image.get_rect()
         return
+    def updateColor(self, color):
+        self.color = color

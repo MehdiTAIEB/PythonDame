@@ -47,10 +47,19 @@ class Game:
         building = 1
 
         while building:
-            if i % 2 and i <= 10:
+            cic = i + 1
+#functionize it
+            if cic % 2 != 0 and i < 9:
+                isPawn = True # setup color here or form
+            elif i > 9 and i < 20 and i % 2 != 0:
+                isPawn = True
+            elif i >= 20 and i < 30 and i % 2 == 0:
+                isPawn = True
+            elif i > 30 and i < 40 and i % 2 != 0:
                 isPawn = True
             else:
                 isPawn = False
+#that too
             if i % 10 == 0 and i != 0:
                 if ci == False:
                     ci = True
@@ -58,26 +67,26 @@ class Game:
                     ci = False
                 offset = 0
                 height = height - 40
-
-            if i < 100:
+#and that lol
+            if i <= 100:
                 if ci == True:
                     color = self.defineColor(i + 1)
                 else:
-                     color = self.defineColor(i)
+                    color = self.defineColor(i)
                 sp.append(Builder(offset, height, color, isPawn, isDame))
                 #push in dictionary to get repere
                 offset = offset + 40
                 i = i + 1
             else:
                 building = 0
-
+#then
         sprites = pygame.sprite.RenderPlain(sp)
         return sprites
 
     def defineColor(self, number):
         if (number % 2 == 0):
-            color = (99, 57, 0, 0.9)
+            color = (99, 57, 0)
         else:
-            color = (215, 157, 78, 0.9)
+            color = (215, 157, 78)
         return color
 Game();
