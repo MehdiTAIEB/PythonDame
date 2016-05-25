@@ -13,10 +13,17 @@ class Builder(pygame.sprite.Sprite):
         self.determinePlayer(pOne, pTwo)
         self.setColor(color)
         self.image.fill(self.color)
+        self.displayPawn(pOne, pTwo)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.focus = False
+
+    def displayPawn(self, pOne, pTwo):
+        if pOne == True:
+            pygame.draw.circle(self.image, (255, 255, 255), (20, 20), 10)
+        elif pTwo == True:
+            pygame.draw.circle(self.image, (0, 0, 0), (20, 20), 10)
 
     def update(self):
         return
@@ -25,7 +32,7 @@ class Builder(pygame.sprite.Sprite):
         self.color = color
         self.image.fill(self.color)
 
-    def setFocus(self):
+    def setFocus(self): #rework focus to set with new dispatch
         if self.focus == False:
             if self.isPawn and self.player == '1': # compare with le tour du mec
                 color = (41, 95, 255, 0.5) # donner en param et mit en self.tour
@@ -62,11 +69,5 @@ class Builder(pygame.sprite.Sprite):
             self.player = '2'
 
     def setColor(self, color):
-        if self.isPawn == True:
-            if self.player == '1':
-                self.color = (255, 255, 255)
-            else:
-                self.color = (0, 0, 0)
-        else:
-            self.color = color
+        self.color = color
         self.originalColor = color
