@@ -31,12 +31,16 @@ class Game:
                 if event.type == QUIT:
                     return
                 elif event.type == MOUSEBUTTONDOWN:
-                    print('')
-                    return
+                    self.findClickedRect(pygame.mouse.get_pos())
             sprites.update()
             screen.blit(background, (0, 0))
             sprites.draw(screen)
             pygame.display.flip()
+
+    def findClickedRect(self, pos):
+        #loop
+        if self.speList['a0'].rect.collidepoint(pos):
+            self.speList['a0'].setFocus()
 
     def mapFactory(self):
         isDame = False
@@ -71,7 +75,6 @@ class Game:
                 i = i + 1
             else:
                 building = 0
-        self.speList['a0'].updateColor((0,0,0))
         sprites = pygame.sprite.RenderPlain(sp)
         return sprites
 

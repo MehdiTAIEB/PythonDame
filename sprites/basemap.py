@@ -23,8 +23,12 @@ class Builder(pygame.sprite.Sprite):
     def updateColor(self, color):
         self.color = color
         self.image.fill(self.color)
-        self.rect = self.image.get_rect()
 
+    def setFocus(self):
+        color = (41, 95, 255, 0.5)
+        self.updateColor(color)
+# loops pour enlever le dur
+# penser a original color for board when pio eat or move to avoir re calculate
     def determinePlayer(self, pOne, pTwo):
         if pOne == True:
             self.player = '1'
