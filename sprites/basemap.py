@@ -16,6 +16,7 @@ class Builder(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.focus = False
 
     def update(self):
         return
@@ -25,10 +26,35 @@ class Builder(pygame.sprite.Sprite):
         self.image.fill(self.color)
 
     def setFocus(self):
-        color = (41, 95, 255, 0.5)
+        if self.focus == False:
+            if self.isPawn and self.player == '1': # compare with le tour du mec
+                color = (41, 95, 255, 0.5) # donner en param et mit en self.tour
+            elif self.isPawn and self.player == '2':
+                color = (255, 0, 0, 0.5)
+            else:
+                color = self.originalColor
+            self.updateColor(color)
+            self.focus = True
+        else:
+            if self.isPawn and self.player == '1':
+                color = (255, 255, 255)
+            elif self.isPawn and self.player == '2':
+                color = (0, 0, 0)
+            else:
+                color = self.originalColor
+            self.updateColor(color)
+            self.focus = False
+
+    def unFocus(self):
+        if self.isPawn and self.player == '1':
+            color = (255, 255, 255)
+        elif self.isPawn and self.player == '2':
+            color = (0, 0, 0)
+        else:
+            color = self.originalColor
         self.updateColor(color)
-# loops pour enlever le dur
-# penser a original color for board when pio eat or move to avoir re calculate
+        self.focus = False
+
     def determinePlayer(self, pOne, pTwo):
         if pOne == True:
             self.player = '1'
@@ -43,3 +69,4 @@ class Builder(pygame.sprite.Sprite):
                 self.color = (0, 0, 0)
         else:
             self.color = color
+        self.originalColor = color

@@ -38,9 +38,11 @@ class Game:
             pygame.display.flip()
 
     def findClickedRect(self, pos):
-        #loop
-        if self.speList['a0'].rect.collidepoint(pos):
-            self.speList['a0'].setFocus()
+        for key, value in self.speList.iteritems():
+            if self.speList[key].rect.collidepoint(pos):
+                self.speList[key].setFocus()
+            else:
+                self.speList[key].unFocus()
 
     def mapFactory(self):
         isDame = False
