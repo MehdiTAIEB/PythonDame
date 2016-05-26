@@ -18,7 +18,7 @@ class Game:
         background = pygame.Surface(screen.get_size())
         background = background.convert()
         background.fill((250, 250, 250))
-
+        self.round = 1
         screen.blit(background, (0, 0))
         pygame.display.flip()
 
@@ -45,13 +45,17 @@ class Game:
                 self.speList[key].setFocus()
                 if self.speList[key].isPawn == False:
                     if self.target != '':
-                        print key, self.target
-                        self.speList[key].setPawn(self.speList[self.target].player)
-                        self.speList[self.target].unsetPawn() #recheck
-                        self.target = ''
-                        #change le tour
+                        if self.round == int(self.speList[self.target].player):
+                            print key, self.target
+                            self.speList[key].setPawn(self.speList[self.target].player)
+                            self.speList[self.target].unsetPawn() #recheck
+                            self.target = ''
+                            if self.round == 1:
+                                self.round = 2
+                            else:
+                                self.round = 1
                     # if not a spawn if diagonale so redraw + 10 ou - 10 and limit a une case avec 10 aussi
-                else: # change the way to store selftarget to redraw
+                else:
                     self.target = key
             else:
                 self.speList[key].unFocus()
