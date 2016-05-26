@@ -12,6 +12,7 @@ class Game:
     def __init__(self):
         pygame.init()
         self.speList = {}
+        self.target = ''
         screen = pygame.display.set_mode((400, 400))
         pygame.display.set_caption('Jeu de Dame')
         background = pygame.Surface(screen.get_size())
@@ -39,14 +40,28 @@ class Game:
 
     def findClickedRect(self, pos):
         for key, value in self.speList.iteritems():
+            row = key[0]
             if self.speList[key].rect.collidepoint(pos):
                 self.speList[key].setFocus()
-                row = key[0]
-                targets = self.findPossibleMoves(row)
-                #axes = 
-                print targets
+                if self.speList[key].isPawn == False:
+                    if self.target != '':
+                        print key, self.target
+                        self.speList[key].setPawn(self.speList[self.target].player)
+                        self.speList[self.target].unsetPawn() #recheck
+                        self.target = ''
+                        #change le tour
+                    # if not a spawn if diagonale so redraw + 10 ou - 10
+                else: # change the way to store selftarget to redraw
+                    self.target = key
             else:
                 self.speList[key].unFocus()
+
+    def getIndex(self, key):
+        if len(key) == 3:
+            num = str(key[1]) + str(key[2])
+        else:
+            num = str(key[1])
+        return num
 
     def findPossibleMoves(self, row):
         targets = []

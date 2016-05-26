@@ -60,3 +60,21 @@ class Builder(pygame.sprite.Sprite):
     def setColor(self, color):
         self.color = color
         self.originalColor = color
+
+    def setPawn(self, player):
+        self.isPawn = True
+        self.player = player # fake now must resolve
+        if player == '1':
+            one = True
+            two = False
+        else:
+            one = False
+            two = True
+        self.displayPawn(one, two)
+        self.focus = False
+
+    def unsetPawn(self):
+        self.isPawn = False
+        self.player = ''
+        self.focus = False
+        self.updateColor(self.originalColor)
