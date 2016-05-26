@@ -46,15 +46,28 @@ class Game:
                 if self.speList[key].isPawn == False:
                     if self.target != '':
                         if self.round == int(self.speList[self.target].player):
-                            print key, self.target
-                            self.speList[key].setPawn(self.speList[self.target].player)
-                            self.speList[self.target].unsetPawn() #recheck
-                            self.target = ''
+                            numO = int(self.getIndex(self.target))
+                            numU = int(self.getIndex(key))
+                            print numO, numU
+                            ok = False
                             if self.round == 1:
-                                self.round = 2
+                                if self.speList[key].isPawn == False:
+                                    if numU - numO == 9 or numU - numO == 11:
+                                        ok = True
+                                else:
+                                    print 'check if can eat cause he a pawn chekc team pawn and if + 11 or - 11 empty'
                             else:
-                                self.round = 1
-                    # if not a spawn if diagonale so redraw + 10 ou - 10 and limit a une case avec 10 aussi
+                                if self.speList[key].isPawn == False:
+                                    if numO - numU == 9 or numO - numU == 11:
+                                        ok = True
+                            if ok:
+                                self.speList[key].setPawn(self.speList[self.target].player)
+                                self.speList[self.target].unsetPawn() #recheck
+                                self.target = ''
+                                if self.round == 1:
+                                    self.round = 2
+                                else:
+                                    self.round = 1
                 else:
                     self.target = key
             else:
