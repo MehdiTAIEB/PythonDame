@@ -41,8 +41,26 @@ class Game:
         for key, value in self.speList.iteritems():
             if self.speList[key].rect.collidepoint(pos):
                 self.speList[key].setFocus()
+                row = key[0]
+                targets = self.findPossibleMoves(row)
+                #axes = 
+                print targets
             else:
                 self.speList[key].unFocus()
+
+    def findPossibleMoves(self, row):
+        targets = []
+        alpha = 'abcdefghijklmnopqrstuvwxyz'
+        for i, c in enumerate(alpha):
+            if c == 'a' and c == row:
+                targets.append(alpha[i + 1])
+            elif c == 'z' and c == row:
+                targets.append(alpha[i - 1])
+            elif c == row:
+                targets.append(alpha[i + 1])
+                targets.append(alpha[i - 1])
+
+        return targets
 
     def mapFactory(self):
         isDame = False
