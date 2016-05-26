@@ -48,14 +48,11 @@ class Game:
                         if self.round == int(self.speList[self.target].player):
                             numO = int(self.getIndex(self.target))
                             numU = int(self.getIndex(key))
-                            print numO, numU
                             ok = False
                             if self.round == 1:
                                 if self.speList[key].isPawn == False:
                                     if numU - numO == 9 or numU - numO == 11:
                                         ok = True
-                                else:
-                                    print 'check if can eat cause he a pawn chekc team pawn and if + 11 or - 11 empty'
                             else:
                                 if self.speList[key].isPawn == False:
                                     if numO - numU == 9 or numO - numU == 11:
@@ -69,6 +66,29 @@ class Game:
                                 else:
                                     self.round = 1
                 else:
+                    if self.target != '':
+                        if self.round == int(self.speList[self.target].player):
+                            numO = int(self.getIndex(self.target))
+                            numU = int(self.getIndex(key))
+                            ok = False
+                            if self.round == 1:
+                                if self.speList[key].isPawn == True:
+                                    print numO
+                                    print numU
+                                    if numU < numO:
+                                        tes = numU + 9
+                                    else:
+                                        tes = numU + 11
+                                    if key[0] != 'z':
+                                        lett = chr(ord(key[0]) + 1)
+                                    print lett + str(tes)
+                                    if self.speList[lett + str(tes)].isPawn == False:
+                                        print 'can eat'
+                                    else:
+                                        print 'cannot eat'
+                            else:
+                                if self.speList[key].isPawn == True:
+                                    print numU, numO
                     self.target = key
             else:
                 self.speList[key].unFocus()
