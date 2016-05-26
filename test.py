@@ -50,7 +50,7 @@ class Game:
                         self.speList[self.target].unsetPawn() #recheck
                         self.target = ''
                         #change le tour
-                    # if not a spawn if diagonale so redraw + 10 ou - 10
+                    # if not a spawn if diagonale so redraw + 10 ou - 10 and limit a une case avec 10 aussi
                 else: # change the way to store selftarget to redraw
                     self.target = key
             else:
