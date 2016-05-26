@@ -12,12 +12,13 @@ class Game:
     def __init__(self):
         pygame.init()
         self.speList = {}
+        self.target = ''
         screen = pygame.display.set_mode((400, 400))
         pygame.display.set_caption('Jeu de Dame')
         background = pygame.Surface(screen.get_size())
         background = background.convert()
         background.fill((250, 250, 250))
-
+        self.round = 1
         screen.blit(background, (0, 0))
         pygame.display.flip()
 
@@ -39,10 +40,46 @@ class Game:
 
     def findClickedRect(self, pos):
         for key, value in self.speList.iteritems():
+            row = key[0]
             if self.speList[key].rect.collidepoint(pos):
                 self.speList[key].setFocus()
+                if self.speList[key].isPawn == False:
+                    if self.target != '':
+                        if self.round == int(self.speList[self.target].player):
+                            print key, self.target
+                            self.speList[key].setPawn(self.speList[self.target].player)
+                            self.speList[self.target].unsetPawn() #recheck
+                            self.target = ''
+                            if self.round == 1:
+                                self.round = 2
+                            else:
+                                self.round = 1
+                    # if not a spawn if diagonale so redraw + 10 ou - 10 and limit a une case avec 10 aussi
+                else:
+                    self.target = key
             else:
                 self.speList[key].unFocus()
+
+    def getIndex(self, key):
+        if len(key) == 3:
+            num = str(key[1]) + str(key[2])
+        else:
+            num = str(key[1])
+        return num
+
+    def findPossibleMoves(self, row):
+        targets = []
+        alpha = 'abcdefghijklmnopqrstuvwxyz'
+        for i, c in enumerate(alpha):
+            if c == 'a' and c == row:
+                targets.append(alpha[i + 1])
+            elif c == 'z' and c == row:
+                targets.append(alpha[i - 1])
+            elif c == row:
+                targets.append(alpha[i + 1])
+                targets.append(alpha[i - 1])
+
+        return targets
 
     def mapFactory(self):
         isDame = False
