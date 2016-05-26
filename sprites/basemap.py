@@ -34,18 +34,18 @@ class Builder(pygame.sprite.Sprite):
 
     def setFocus(self): #rework focus to set with new dispatch
         if self.focus == False:
-            if self.isPawn and self.player == '1':
+            if self.isPawn and self.player == 1:
                 pygame.draw.circle(self.image, (0,250,0), (5,5), 5)
-            elif self.isPawn and self.player == '2':
+            elif self.isPawn and self.player == 2:
                 pygame.draw.circle(self.image, (250,0,0), (5,5), 5)
             self.focus = True
         else:
             self.unFocus()
 
     def unFocus(self):
-        if self.isPawn and self.player == '1':
+        if self.isPawn and self.player == 1:
             pygame.draw.circle(self.image, (self.originalColor), (5,5), 5)
-        elif self.isPawn and self.player == '2':
+        elif self.isPawn and self.player == 2:
             pygame.draw.circle(self.image, (self.originalColor), (5,5), 5)
         else:
             color = self.originalColor
@@ -53,9 +53,9 @@ class Builder(pygame.sprite.Sprite):
 
     def determinePlayer(self, pOne, pTwo):
         if pOne == True:
-            self.player = '1'
+            self.player = 1
         elif pTwo == True:
-            self.player = '2'
+            self.player = 2
 
     def setColor(self, color):
         self.color = color
@@ -64,7 +64,7 @@ class Builder(pygame.sprite.Sprite):
     def setPawn(self, player):
         self.isPawn = True
         self.player = player # fake now must resolve
-        if player == '1':
+        if player == 1:
             one = True
             two = False
         else:
@@ -75,6 +75,6 @@ class Builder(pygame.sprite.Sprite):
 
     def unsetPawn(self):
         self.isPawn = False
-        self.player = ''
+        self.player = 0
         self.focus = False
         self.updateColor(self.originalColor)

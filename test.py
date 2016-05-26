@@ -65,16 +65,15 @@ class Game:
                                     self.round = 2
                                 else:
                                     self.round = 1
-                else:
+                elif self.speList[key].isPawn == True:
                     if self.target != '':
-                        if self.round == int(self.speList[self.target].player):
+                        #if type(self.speList[self.target].player)
+                        if self.round == self.speList[self.target].player and self.speList[key] != self.speList[self.target]:
                             numO = int(self.getIndex(self.target))
                             numU = int(self.getIndex(key))
                             ok = False
                             if self.round == 1:
                                 if self.speList[key].isPawn == True:
-                                    print numO
-                                    print numU
                                     if numU < numO:
                                         tes = numU + 9
                                     else:
@@ -83,7 +82,15 @@ class Game:
                                         lett = chr(ord(key[0]) + 1)
                                     print lett + str(tes)
                                     if self.speList[lett + str(tes)].isPawn == False:
-                                        print 'can eat'
+                                        self.speList[lett + str(tes)].setPawn(self.speList[self.target].player)
+
+                                        self.speList[self.target].unsetPawn()
+                                        self.speList[key].unsetPawn()
+                                        if self.round == 1:
+                                            self.round = 2
+                                        else:
+                                            self.round = 1
+
                                     else:
                                         print 'cannot eat'
                             else:
