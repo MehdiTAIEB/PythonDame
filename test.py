@@ -13,7 +13,7 @@ class Game:
         pygame.init()
         self.speList = {}
         self.target = ''
-        screen = pygame.display.set_mode((400, 400))
+        screen = pygame.display.set_mode((500, 500))
         pygame.display.set_caption('Jeu de Dame')
         background = pygame.Surface(screen.get_size())
         background = background.convert()
@@ -83,7 +83,6 @@ class Game:
                                     print lett + str(tes)
                                     if self.speList[lett + str(tes)].isPawn == False:
                                         self.speList[lett + str(tes)].setPawn(self.speList[self.target].player)
-
                                         self.speList[self.target].unsetPawn()
                                         self.speList[key].unsetPawn()
                                         if self.round == 1:
@@ -129,7 +128,7 @@ class Game:
         ci = False
         i = 0
         offset = 0
-        height = 360
+        height = 450
         sp = []
         building = 1
 
@@ -141,7 +140,7 @@ class Game:
                 else:
                     ci = False
                 offset = 0
-                height = height - 40
+                height = height - 50
 
             if i <= 100:
                 if ci == True:
@@ -150,7 +149,7 @@ class Game:
                     color = self.defineColor(i)
                 row = self.storeSprites(offset, height, color, isPawn, isDame, pOne, pTwo, i)
                 sp.append(self.speList[row + str(i)])
-                offset = offset + 40
+                offset = offset + 50
                 i = i + 1
             else:
                 building = 0
