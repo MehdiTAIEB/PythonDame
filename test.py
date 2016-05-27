@@ -13,7 +13,7 @@ class Game:
         pygame.init()
         self.speList = {}
         self.target = ''
-        screen = pygame.display.set_mode((400, 400))
+        screen = pygame.display.set_mode((500, 500))
         pygame.display.set_caption('Jeu de Dame')
         background = pygame.Surface(screen.get_size())
         background = background.convert()
@@ -46,16 +46,55 @@ class Game:
                 if self.speList[key].isPawn == False:
                     if self.target != '':
                         if self.round == int(self.speList[self.target].player):
-                            print key, self.target
-                            self.speList[key].setPawn(self.speList[self.target].player)
-                            self.speList[self.target].unsetPawn() #recheck
-                            self.target = ''
+                            numO = int(self.getIndex(self.target))
+                            numU = int(self.getIndex(key))
+                            ok = False
                             if self.round == 1:
-                                self.round = 2
+                                if self.speList[key].isPawn == False:
+                                    if numU - numO == 9 or numU - numO == 11:
+                                        ok = True
                             else:
-                                self.round = 1
-                    # if not a spawn if diagonale so redraw + 10 ou - 10 and limit a une case avec 10 aussi
-                else:
+                                if self.speList[key].isPawn == False:
+                                    if numO - numU == 9 or numO - numU == 11:
+                                        ok = True
+                            if ok:
+                                self.speList[key].setPawn(self.speList[self.target].player)
+                                self.speList[self.target].unsetPawn() #recheck
+                                self.target = ''
+                                if self.round == 1:
+                                    self.round = 2
+                                else:
+                                    self.round = 1
+                elif self.speList[key].isPawn == True:
+                    if self.target != '':
+                        #if type(self.speList[self.target].player)
+                        if self.round == self.speList[self.target].player and self.speList[key] != self.speList[self.target]:
+                            numO = int(self.getIndex(self.target))
+                            numU = int(self.getIndex(key))
+                            ok = False
+                            if self.round == 1:
+                                if self.speList[key].isPawn == True:
+                                    if numU < numO:
+                                        tes = numU + 9
+                                    else:
+                                        tes = numU + 11
+                                    if key[0] != 'z':
+                                        lett = chr(ord(key[0]) + 1)
+                                    print lett + str(tes)
+                                    if self.speList[lett + str(tes)].isPawn == False:
+                                        self.speList[lett + str(tes)].setPawn(self.speList[self.target].player)
+                                        self.speList[self.target].unsetPawn()
+                                        self.speList[key].unsetPawn()
+                                        if self.round == 1:
+                                            self.round = 2
+                                        else:
+                                            self.round = 1
+
+                                    else:
+                                        print 'cannot eat'
+                            else:
+                                if self.speList[key].isPawn == True:
+                                    print numU, numO
                     self.target = key
             else:
                 self.speList[key].unFocus()
@@ -89,7 +128,7 @@ class Game:
         ci = False
         i = 0
         offset = 0
-        height = 360
+        height = 450
         sp = []
         building = 1
 
@@ -101,7 +140,7 @@ class Game:
                 else:
                     ci = False
                 offset = 0
-                height = height - 40
+                height = height - 50
 
             if i <= 100:
                 if ci == True:
@@ -110,7 +149,7 @@ class Game:
                     color = self.defineColor(i)
                 row = self.storeSprites(offset, height, color, isPawn, isDame, pOne, pTwo, i)
                 sp.append(self.speList[row + str(i)])
-                offset = offset + 40
+                offset = offset + 50
                 i = i + 1
             else:
                 building = 0
